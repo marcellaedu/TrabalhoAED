@@ -15,6 +15,7 @@ void inicializarArquivoMusicas(){
 
     if(arq == NULL){
         printf("\nErro ao criar arquivo musicas.dat. \n");
+        return;
     }
 
     cabMusica cab;
@@ -134,7 +135,7 @@ int listarAcervo(){
         return 1;
     }
 
-    printf("\n--- ACERVO DE MUSICAS ---");
+    printf("\n-------- ACERVO ----------");
     while(c != -1){
         fseek(arq, sizeof(cabMusica) + c * sizeof(musica), SEEK_SET);
         fread(&m, sizeof(musica), 1, arq);
@@ -149,31 +150,31 @@ int listarAcervo(){
     return 1;
 }
 
-int existeMusica(int cod){
+int buscarMusica(int codigo, musica *m, int *posicao) {
     FILE * arq = fopen("musicas.dat", "rb");
-    if(arq == NULL){
-        return 0;
-    }
+    if (arq == NULL) return 0;
 
     cabMusica cab;
-    musica m;
-
+    musica musica;
     fread(&cab, sizeof(cabMusica), 1, arq);
-
     int c = cab.cabeca;
 
-    while (c != -1){
+    while (c != -1) {
         fseek(arq, sizeof(cabMusica) + c * sizeof(musica), SEEK_SET);
-        fread(&m, sizeof(musica), 1, arq);
+        fread(&musica, sizeof(musica), 1, arq);
 
-        if (m.codigo == cod){
+        if (musica.codigo == codigo) {
+            if (m != NULL) *m = musica;
+            if (posicao != NULL) *posicao = c;
             fclose(arq);
-            return 1;
+            return 1; 
         }
-        
-        c = m.prox;
+        c = musica.prox;
     }
-
     fclose(arq);
-    return 0;
+    return 0; 
+}
+
+int existeMusica(int codigo) {
+    return buscarMusica(codigo, NULL, NULL);
 }

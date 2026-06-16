@@ -45,6 +45,13 @@ int imprimirMusica(int cod);
 // Pós-condição: lista tudo na tela
 int listarAcervo();
 
+// Busca uma musica pelo código
+// Entrada: código da musica, ponteiro para musica encontrada e ponteiro para posição encontrada
+// Retorno: 1 se encontrar e 0 caso contrário
+// Pré-condição: o arquivo de musica deve existir
+// Pós-condição: os dados da musica e posição são preenchidas caso a musica seja encontrada
+int buscarMusica(int codigo, musica *m, int *posicao);
+
 // Verifica se uma musica existe pelo codigo
 // Entrada: codigo da musica
 // Retorno: 1 se existe, 0 se não
