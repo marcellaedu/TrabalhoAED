@@ -5,7 +5,6 @@
 #include "playlists.h"
 #include "faixas.h"
 #include "arquivo.h"
-#include <locale.h>
 
 int main() {
     inicializarArquivoMusicas();
